@@ -70,7 +70,7 @@
     }
 
     // Check if credentials are set
-    const hasConfig = typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL !== 'https://xuuhgyclvlyywvxtbinp.supabase.co';
+    const hasConfig = typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL.trim() !== '' && !SUPABASE_URL.includes('YOUR_');
     const supabaseUrl = hasConfig ? SUPABASE_URL : localStorage.getItem('jfn_supabase_url');
     const supabaseAnonKey = hasConfig ? SUPABASE_ANON_KEY : localStorage.getItem('jfn_supabase_anon_key');
 
