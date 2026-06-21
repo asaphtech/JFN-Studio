@@ -34,14 +34,14 @@ const supabaseAnonKey = hasConfig ? SUPABASE_ANON_KEY : localStorage.getItem('jf
 let supabaseClient = null;
 let isDbConnected = false;
 
-if (typeof supabaseJs !== 'undefined' && supabaseUrl && supabaseAnonKey) {
+if (typeof supabase !== 'undefined' && supabaseUrl && supabaseAnonKey) {
   try {
-    supabaseClient = supabaseJs.createClient(supabaseUrl, supabaseAnonKey);
+    supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
   } catch (err) {
     console.error('Gagal menginisialisasi klien Supabase:', err);
   }
 } else if (supabaseUrl && supabaseAnonKey) {
-  console.warn('SDK Supabase (supabaseJs) tidak terdeteksi. Berjalan tanpa koneksi Supabase.');
+  console.warn('SDK Supabase tidak terdeteksi. Berjalan tanpa koneksi Supabase.');
 }
 
 // Fallback Offline Data (If Supabase is not connected or configured)

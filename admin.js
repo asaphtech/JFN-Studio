@@ -46,9 +46,9 @@ let supabaseClient = null;
 let useLocalDemoMode = false;
 
 // Attempt initializing Supabase Client
-if (typeof supabaseJs !== 'undefined' && supabaseUrl && supabaseAnonKey) {
+if (typeof supabase !== 'undefined' && supabaseUrl && supabaseAnonKey) {
   try {
-    supabaseClient = supabaseJs.createClient(supabaseUrl, supabaseAnonKey);
+    supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
   } catch (err) {
     console.error('Gagal memuat client Supabase:', err);
   }

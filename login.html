@@ -74,8 +74,8 @@
     const supabaseUrl = hasConfig ? SUPABASE_URL : localStorage.getItem('jfn_supabase_url');
     const supabaseAnonKey = hasConfig ? SUPABASE_ANON_KEY : localStorage.getItem('jfn_supabase_anon_key');
     let supabaseClient;
-    if (supabaseUrl && supabaseAnonKey) {
-      supabaseClient = supabaseJs.createClient(supabaseUrl, supabaseAnonKey);
+    if (typeof supabase !== 'undefined' && supabaseUrl && supabaseAnonKey) {
+      supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
       // Check if user is already logged in, redirect to admin.html
       supabaseClient.auth.getSession().then(({ data }) => {
