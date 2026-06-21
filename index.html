@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JFN Studio Hub - Pusat Ekosistem Proyek</title>
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Supabase JS Library CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Globe.gl CDN -->
+  <script src="https://unpkg.com/globe.gl"></script>
+</head>
+<body class="public-page">
+
+  <!-- Header & Navigation (Linear-inspired, flat and clean) -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo-area">
+        <a href="index.html" class="logo-link">
+          <img src="logo.png" alt="JFN Studio Logo" class="app-logo-img">
+        </a>
+      </div>
+      
+      <div class="header-controls">
+        <nav class="nav-links">
+          <a href="#hero-section" class="nav-link">Beranda</a>
+          <a href="#ecosystem-section" class="nav-link">Ekosistem</a>
+          <a href="#feed-section" class="nav-link">Pembaruan</a>
+          <a href="#stats-section" class="nav-link">Statistik</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout (One-Page Scroll) -->
+  <main class="main-content">
+    
+    <!-- Section 1: Hero Section (Headline & 3D Interactive Globe) -->
+    <section class="hero-section-wrapper" id="hero-section">
+      <div class="hero-container">
+        
+        <!-- Left Side: Hero Text content -->
+        <div class="hero-text-content">
+          <h1>Connecting Code, Extensions, and Digital Art</h1>
+          <p class="hero-subtitle" id="jfn-description-display">
+            Selamat datang di hub ekosistem digital JFN Studio. Kami menggabungkan pengembangan web modern, ekstensi browser fungsional, dan seni digital NFT unik ke dalam satu ekosistem terpadu.
+          </p>
+          <div class="hero-actions">
+            <a href="#ecosystem-section" class="btn btn-primary">
+              <span>Jelajahi Ekosistem</span>
+              <i data-lucide="arrow-down"></i>
+            </a>
+            <a href="https://github.com" target="_blank" class="btn btn-secondary">
+              <i data-lucide="github"></i>
+              <span>GitHub Profile</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Side: 3D Interactive Globe Container -->
+        <div class="hero-globe-visual">
+          <div id="globe-container">
+            <!-- Globe.gl will render here -->
+          </div>
+          <div class="globe-loading-placeholder" id="globe-placeholder">
+            <div class="loading-spinner"></div>
+            <p>Menginisialisasi Bola Dunia 3D...</p>
+          </div>
+          <div class="globe-location-tooltip" id="globe-tooltip" style="display: none;">
+            <i data-lucide="map-pin"></i>
+            <span id="user-location-text">Mendeteksi lokasi Anda...</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="main-container">
+      
+      <!-- Section 2: Core Ecosystem (3 Pillar Cards) -->
+      <section class="ecosystem-section-wrapper" id="ecosystem-section">
+        <div class="section-header-clean">
+          <i data-lucide="cpu" class="section-icon-primary"></i>
+          <h2>Core Ecosystem</h2>
+          <span class="section-subtitle-line" id="jfn-goals-display">Tiga pilar utama pengembangan JFN Studio</span>
+        </div>
+
+        <div class="ecosystem-grid">
+          
+          <!-- Card 1: Chrome Extensions -->
+          <div class="ecosystem-card glass-panel" data-pillar="extensions">
+            <div class="card-pillar-header">
+              <div class="pillar-icon extensions">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                  <path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5a2.5 2.5 0 0 0-5 0V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5a2.5 2.5 0 0 1 0 5H2v4c0 1.1.9 2 2 2h4v-1.5a2.5 2.5 0 0 1 5 0V21h4c1.1 0 2-.9 2-2v-4h1.5a2.5 2.5 0 0 0 0-5z"/>
+                </svg>
+              </div>
+              <span class="pillar-label">Browser Tools</span>
+            </div>
+            <h3>Chrome Extensions</h3>
+            <p>Ekstensi peramban canggih yang dirancang untuk produktivitas dan integrasi media penyiaran, termasuk integrasi OBS dan utilitas otomatisasi login.</p>
+            <div class="pillar-stats-box">
+              <div class="stat-pill">
+                <span class="value">3+</span>
+                <span class="label">Publikasi</span>
+              </div>
+              <div class="stat-pill">
+                <span class="value">10k+</span>
+                <span class="label">User Aktif</span>
+              </div>
+            </div>
+            <div class="pillar-footer">
+              <a href="#" class="pillar-link">
+                <span>Buka Chrome Web Store</span>
+                <i data-lucide="external-link"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 2: Personal Dev Projects -->
+          <div class="ecosystem-card glass-panel" data-pillar="dev">
+            <div class="card-pillar-header">
+              <div class="pillar-icon dev">
+                <i data-lucide="code-2"></i>
+              </div>
+              <span class="pillar-label">GitHub Lab</span>
+            </div>
+            <h3>Developer Projects</h3>
+            <p>Repositori aplikasi web fungsional untuk manajemen data aman, template antarmuka premium, serta server dashboard penunjang kinerja developer.</p>
+            <div class="pillar-stats-box">
+              <div class="stat-pill">
+                <span class="value">12+</span>
+                <span class="label">Repositori</span>
+              </div>
+              <div class="stat-pill">
+                <span class="value">Active</span>
+                <span class="label">Status</span>
+              </div>
+            </div>
+            <div class="pillar-footer">
+              <a href="#" class="pillar-link">
+                <span>Lihat Kode Sumber</span>
+                <i data-lucide="github"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 3: NFT & Digital Art -->
+          <div class="ecosystem-card glass-panel" data-pillar="art">
+            <div class="card-pillar-header">
+              <div class="pillar-icon art">
+                <i data-lucide="palette"></i>
+              </div>
+              <span class="pillar-label">Digital Assets</span>
+            </div>
+            <h3>NFT & Digital Art</h3>
+            <p>Karya seni digital orisinal dan koleksi NFT bermotif piksel retro dengan utilitas khusus bagi komunitas pengembang JFN Studio.</p>
+            <div class="pillar-stats-box">
+              <div class="stat-pill">
+                <span class="value">500+</span>
+                <span class="label">Minted</span>
+              </div>
+              <div class="stat-pill">
+                <span class="value">OpenSea</span>
+                <span class="label">Market</span>
+              </div>
+            </div>
+            <div class="pillar-footer">
+              <a href="#" class="pillar-link">
+                <span>Jelajahi NFT House</span>
+                <i data-lucide="shopping-bag"></i>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section 3: News Feed Section (Tanpa Label Mading) -->
+      <section class="feed-section-wrapper" id="feed-section">
+        <!-- Filter & Search Bar for News -->
+        <div class="mading-filters glass-panel">
+          <div class="search-box">
+            <i data-lucide="search"></i>
+            <input type="text" id="mading-search" placeholder="Cari pembaruan...">
+          </div>
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-category="all">Semua</button>
+            <button class="filter-btn" data-category="Pengumuman">Pengumuman</button>
+            <button class="filter-btn" data-category="Update">Update</button>
+            <button class="filter-btn" data-category="Rilis">Rilis</button>
+          </div>
+        </div>
+
+        <!-- Grid of Cards (Directly populated by app.js) -->
+        <div class="mading-grid" id="mading-grid">
+          <div class="loading-state-wrapper">
+            <div class="loading-spinner"></div>
+            <p>Memuat pembaruan...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Live Stats & GitHub Graph style -->
+      <section class="stats-section-wrapper" id="stats-section">
+        <div class="stats-card glass-panel">
+          <div class="stats-card-header">
+            <div class="header-left">
+              <i data-lucide="activity" class="stats-icon"></i>
+              <h3>Development Activity</h3>
+            </div>
+            <span class="stats-info-tag">Live Contributions</span>
+          </div>
+          
+          <div class="stats-columns">
+            <div class="stats-desc">
+              <div class="big-metric">840+</div>
+              <div class="metric-label">Commits di Tahun Ini</div>
+              <p>Grafik aktivitas mencerminkan konsistensi penulisan kode sumber, pemeliharaan ekstensi, dan eksperimen di dalam ekosistem pengembang.</p>
+            </div>
+            
+            <!-- GitHub contribution grid simulation -->
+            <div class="github-graph-container">
+              <div class="graph-months">
+                <span>Jan</span><span>Mar</span><span>Mei</span><span>Jul</span><span>Sep</span><span>Nov</span>
+              </div>
+              <div class="github-grid" id="github-graph-grid">
+                <!-- Javascript will populate 7 x 24 blocks -->
+              </div>
+              <div class="graph-legend">
+                <span>Kurang</span>
+                <span class="legend-box level-0"></span>
+                <span class="legend-box level-1"></span>
+                <span class="legend-box level-2"></span>
+                <span class="legend-box level-3"></span>
+                <span>Lebih</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer Section (Developer Terminal styled) -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      
+      <!-- Terminal Contact Console -->
+      <div class="footer-terminal-card">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <span class="terminal-title">jfn_studio@terminal:~</span>
+        </div>
+        <div class="terminal-body">
+          <p class="cmd-line"><span class="prompt">$</span> cat contact_info.txt</p>
+          <p class="terminal-output">EMAIL: contact@jfnstudio.com</p>
+          <p class="terminal-output">GITHUB: @jfnstudio-dev</p>
+          <p class="terminal-output">LOCATION: Jakarta, Indonesia</p>
+          <p class="cmd-line"><span class="prompt">$</span> <span class="cursor-blink">_</span></p>
+        </div>
+      </div>
+
+      <div class="footer-links-layout">
+        <div class="footer-logo">
+          <img src="logo.png" alt="JFN Studio Logo" class="footer-logo-img">
+        </div>
+        <p class="footer-desc">Pusat integrasi ekosistem web modern untuk JFN Studio. Akses data secara real-time via koneksi cloud database.</p>
+        
+        <div class="footer-bottom-row">
+          <div class="footer-info">
+            <a href="login.html" class="admin-portal-link">
+              <i data-lucide="shield-check"></i> Portal Admin
+            </a>
+          </div>
+          <p class="copyright">&copy; 2026 JFN Studio. Hak Cipta Dilindungi.</p>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- App Scripts -->
+  <script src="config.js"></script>
+  <script src="app.js?v=2"></script>
+</body>
+</html>

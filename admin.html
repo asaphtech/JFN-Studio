@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal - JFN Studio Hub</title>
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Supabase JS Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="admin-page">
+
+  <!-- Header Admin -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo-area">
+        <a href="index.html" class="logo-link">
+          <img src="logo.png" alt="JFN Studio Logo" class="app-logo-img">
+        </a>
+      </div>
+      
+      <div class="header-controls">
+        <a href="index.html" class="btn btn-secondary">
+          <i data-lucide="home"></i>
+          <span>Lihat Situs</span>
+        </a>
+        <button class="btn btn-danger" id="logout-btn">
+          <i data-lucide="log-out"></i>
+          <span>Keluar</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout (Split 2 Column for Settings) -->
+  <main class="main-content">
+    <div class="main-container">
+      
+      <!-- Authentication Guard Loading State -->
+      <div id="auth-loading" class="auth-loading-screen">
+        <div class="loading-spinner"></div>
+        <p>Memeriksa Sesi Autentikasi...</p>
+      </div>
+
+      <!-- Actual Admin Dashboard (hidden until authenticated) -->
+      <div id="admin-dashboard" class="admin-grid" style="display: none;">
+        
+        <!-- Left Column: Profile settings & Connection details -->
+        <div class="admin-column">
+          
+          <!-- Edit About Studio Section -->
+          <section class="admin-section glass-panel">
+            <div class="section-title-area">
+              <div class="title-left">
+                <i data-lucide="edit-3"></i>
+                <h2>Informasi JFN Studio</h2>
+              </div>
+            </div>
+            
+            <div class="section-body">
+              <div class="form-group">
+                <label for="jfn-description-input">Tentang JFN Studio</label>
+                <textarea id="jfn-description-input" rows="5" placeholder="Jelaskan apa itu JFN Studio..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="jfn-goals-input">Tujuan Ekosistem</label>
+                <textarea id="jfn-goals-input" rows="4" placeholder="Jelaskan tujuan ekosistem ini..."></textarea>
+              </div>
+              <button class="btn btn-success w-full" id="save-info-btn">
+                <i data-lucide="save"></i> Simpan Info JFN
+              </button>
+            </div>
+          </section>
+
+          <!-- Supabase Connection Config Panel (Helper for credentials) -->
+          <section class="admin-section glass-panel">
+            <div class="section-title-area">
+              <div class="title-left">
+                <i data-lucide="database"></i>
+                <h2>Status Koneksi Supabase</h2>
+              </div>
+            </div>
+            
+            <div class="section-body">
+              <div class="status-indicator-box">
+                <div class="status-label">Koneksi Database:</div>
+                <div class="status-value" id="db-status">
+                  <span class="status-dot"></span>
+                  <span id="db-status-text">Memeriksa...</span>
+                </div>
+              </div>
+              <div class="config-instructions">
+                <p>Kredensial dibaca dari berkas <code>config.js</code>.</p>
+                <p>Jika ingin mengganti URL dan Anon Key tanpa mengedit berkas, Anda dapat memasukkannya di bawah ini (disimpan di browser):</p>
+              </div>
+              <div class="form-group">
+                <label for="local-supabase-url">Supabase URL</label>
+                <input type="text" id="local-supabase-url" placeholder="https://xxxx.supabase.co">
+              </div>
+              <div class="form-group">
+                <label for="local-supabase-key">Supabase Anon Key</label>
+                <input type="password" id="local-supabase-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+              </div>
+              <button class="btn btn-secondary w-full" id="save-local-config-btn">
+                <i data-lucide="hard-drive"></i> Simpan Konfigurasi Lokal
+              </button>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- Right Column: News and Bulletin management -->
+        <div class="admin-column">
+          
+          <!-- Add/Edit News Form -->
+          <section class="admin-section glass-panel">
+            <div class="section-title-area">
+              <div class="title-left">
+                <i data-lucide="plus-circle" id="form-icon"></i>
+                <h2 id="news-form-title">Tambah Berita Baru</h2>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <!-- ID field hidden, used when editing a news card -->
+              <input type="hidden" id="news-id-input">
+
+              <div class="form-group">
+                <label for="news-title-input">Judul Berita</label>
+                <input type="text" id="news-title-input" placeholder="Masukkan judul berita mading...">
+              </div>
+
+              <div class="form-group-row">
+                <div class="form-group col">
+                  <label for="news-category-input">Kategori</label>
+                  <select id="news-category-input">
+                    <option value="Pengumuman">📢 Pengumuman</option>
+                    <option value="Update">⚙️ Update</option>
+                    <option value="Rilis">🚀 Rilis</option>
+                  </select>
+                </div>
+                <div class="form-group col">
+                  <label for="news-date-input">Tanggal Berita</label>
+                  <input type="date" id="news-date-input">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="news-content-input">Isi Berita</label>
+                <textarea id="news-content-input" rows="5" placeholder="Tulis rincian info/berita mading di sini..."></textarea>
+              </div>
+
+              <div class="form-actions">
+                <button class="btn btn-secondary flex-1" id="cancel-edit-btn" style="display: none;">Batal</button>
+                <button class="btn btn-primary flex-2" id="save-news-btn">
+                  <i data-lucide="plus"></i> Tambah Berita
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Manage Existing News List -->
+          <section class="admin-section glass-panel">
+            <div class="section-title-area">
+              <div class="title-left">
+                <i data-lucide="list"></i>
+                <h2>Daftar Berita Aktif</h2>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <div class="news-list-manager" id="news-list-manager">
+                <!-- Dynamically populated edit list -->
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="footer-logo">
+          <img src="logo.png" alt="JFN Studio Logo" class="footer-logo-img">
+        </div>
+      </div>
+      <div class="footer-right">
+        <p class="copyright">&copy; 2026 JFN Studio. Akses Terbatas Admin.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Configurations and Main Script -->
+  <script src="config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

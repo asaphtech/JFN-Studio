@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Admin - JFN Studio Hub</title>
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Supabase JS Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="login-page">
+
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-logo">
+          <img src="logo.png" alt="JFN Studio Logo" class="login-logo-img">
+        </div>
+        <h2>Masuk Portal Admin</h2>
+        <p class="login-subtitle">Gunakan akun Supabase Anda untuk mengelola JFN Studio Hub</p>
+      </div>
+
+      <div class="alert-box danger" id="error-message" style="display: none;">
+        <i data-lucide="alert-circle"></i>
+        <span id="error-text">Email atau password salah.</span>
+      </div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="email-input">Alamat Email</label>
+          <input type="text" id="email-input" placeholder="name@example.com" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="password-input">Kata Sandi</label>
+          <input type="password" id="password-input" placeholder="Masukkan password Anda..." required autocomplete="current-password">
+        </div>
+        
+        <button type="submit" class="btn btn-primary w-full" id="submit-login-btn">
+          <span>Masuk</span>
+          <i data-lucide="arrow-right"></i>
+        </button>
+      </form>
+
+      <div class="login-footer">
+        <a href="index.html" class="back-link">
+          <i data-lucide="arrow-left"></i> Kembali ke Beranda
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Config file -->
+  <script src="config.js"></script>
+  <script>
+    // Initialize Lucide Icons
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+
+    // Check if credentials are set
+    const hasConfig = typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL !== 'YOUR_SUPABASE_URL';
+    const supabaseUrl = hasConfig ? SUPABASE_URL : localStorage.getItem('jfn_supabase_url');
+    const supabaseAnonKey = hasConfig ? SUPABASE_ANON_KEY : localStorage.getItem('jfn_supabase_anon_key');
+
+    let supabase;
+    if (supabaseUrl && supabaseAnonKey) {
+      supabase = supabaseJs.createClient(supabaseUrl, supabaseAnonKey);
+      
+      // Check if user is already logged in, redirect to admin.html
+      supabase.auth.getSession().then(({ data }) => {
+        if (data?.session) {
+          window.location.href = 'admin.html';
+        }
+      });
+    }
+
+    const loginForm = document.getElementById('login-form');
+    const emailInput = document.getElementById('email-input');
+    const passwordInput = document.getElementById('password-input');
+    const errorMessage = document.getElementById('error-message');
+    const errorText = document.getElementById('error-text');
+    const submitBtn = document.getElementById('submit-login-btn');
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      errorMessage.style.display = 'none';
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!supabase) {
+        showError('Supabase belum dikonfigurasi. Silakan isi kredensial di file config.js atau localStorage.');
+        return;
+      }
+
+      // Visual feedback loading
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>Menghubungkan...</span>`;
+
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        
+        if (error) {
+          showError(error.message);
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<span>Masuk</span><i data-lucide="arrow-right"></i>`;
+          if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+          }
+        } else if (data?.session) {
+          // Redirect to admin
+          window.location.href = 'admin.html';
+        }
+      } catch (err) {
+        showError('Terjadi kesalahan koneksi ke Supabase.');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>Masuk</span><i data-lucide="arrow-right"></i>`;
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
+      }
+    });
+
+    function showError(message) {
+      errorText.textContent = message;
+      errorMessage.style.display = 'flex';
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    }
+  </script>
+</body>
+</html>
