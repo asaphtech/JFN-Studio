@@ -27,7 +27,7 @@ const filterBtns = document.querySelectorAll('.filter-btn');
 // ==========================================================================
 
 // Check if credentials exist in config.js or in local storage
-const hasConfig = typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL !== 'YOUR_SUPABASE_URL' && SUPABASE_URL.trim() !== '';
+const hasConfig = typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL !== 'https://xuuhgyclvlyywvxtbinp.supabase.co' && SUPABASE_URL.trim() !== '';
 const supabaseUrl = hasConfig ? SUPABASE_URL : localStorage.getItem('jfn_supabase_url');
 const supabaseAnonKey = hasConfig ? SUPABASE_ANON_KEY : localStorage.getItem('jfn_supabase_anon_key');
 

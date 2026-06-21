@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,9 @@
   <!-- Google Fonts Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
   <!-- CSS Stylesheet -->
   <link rel="stylesheet" href="style.css">
   <!-- Supabase JS Library -->
@@ -15,6 +18,7 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body class="admin-page">
 
   <!-- Header Admin -->
@@ -25,7 +29,7 @@
           <img src="logo.png" alt="JFN Studio Logo" class="app-logo-img">
         </a>
       </div>
-      
+
       <div class="header-controls">
         <a href="index.html" class="btn btn-secondary">
           <i data-lucide="home"></i>
@@ -42,7 +46,7 @@
   <!-- Main Content Layout (Split 2 Column for Settings) -->
   <main class="main-content">
     <div class="main-container">
-      
+
       <!-- Authentication Guard Loading State -->
       <div id="auth-loading" class="auth-loading-screen">
         <div class="loading-spinner"></div>
@@ -51,10 +55,10 @@
 
       <!-- Actual Admin Dashboard (hidden until authenticated) -->
       <div id="admin-dashboard" class="admin-grid" style="display: none;">
-        
+
         <!-- Left Column: Profile settings & Connection details -->
         <div class="admin-column">
-          
+
           <!-- Edit About Studio Section -->
           <section class="admin-section glass-panel">
             <div class="section-title-area">
@@ -63,7 +67,7 @@
                 <h2>Informasi JFN Studio</h2>
               </div>
             </div>
-            
+
             <div class="section-body">
               <div class="form-group">
                 <label for="jfn-description-input">Tentang JFN Studio</label>
@@ -87,7 +91,7 @@
                 <h2>Status Koneksi Supabase</h2>
               </div>
             </div>
-            
+
             <div class="section-body">
               <div class="status-indicator-box">
                 <div class="status-label">Koneksi Database:</div>
@@ -98,7 +102,8 @@
               </div>
               <div class="config-instructions">
                 <p>Kredensial dibaca dari berkas <code>config.js</code>.</p>
-                <p>Jika ingin mengganti URL dan Anon Key tanpa mengedit berkas, Anda dapat memasukkannya di bawah ini (disimpan di browser):</p>
+                <p>Jika ingin mengganti URL dan Anon Key tanpa mengedit berkas, Anda dapat memasukkannya di bawah ini
+                  (disimpan di browser):</p>
               </div>
               <div class="form-group">
                 <label for="local-supabase-url">Supabase URL</label>
@@ -118,7 +123,7 @@
 
         <!-- Right Column: News and Bulletin management -->
         <div class="admin-column">
-          
+
           <!-- Add/Edit News Form -->
           <section class="admin-section glass-panel">
             <div class="section-title-area">
@@ -154,7 +159,8 @@
 
               <div class="form-group">
                 <label for="news-content-input">Isi Berita</label>
-                <textarea id="news-content-input" rows="5" placeholder="Tulis rincian info/berita mading di sini..."></textarea>
+                <textarea id="news-content-input" rows="5"
+                  placeholder="Tulis rincian info/berita mading di sini..."></textarea>
               </div>
 
               <div class="form-actions">
@@ -206,4 +212,5 @@
   <script src="config.js"></script>
   <script src="admin.js"></script>
 </body>
+
 </html>

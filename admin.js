@@ -38,7 +38,7 @@ const newsListManager = document.getElementById('news-list-manager');
 // 1. SUPABASE CLIENT & AUTH GUARD
 // ==========================================================================
 
-const hasConfig = typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL !== 'YOUR_SUPABASE_URL' && SUPABASE_URL.trim() !== '';
+const hasConfig = typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL !== 'https://xuuhgyclvlyywvxtbinp.supabase.co' && SUPABASE_URL.trim() !== '';
 let supabaseUrl = hasConfig ? SUPABASE_URL : localStorage.getItem('jfn_supabase_url');
 let supabaseAnonKey = hasConfig ? SUPABASE_ANON_KEY : localStorage.getItem('jfn_supabase_anon_key');
 
@@ -78,7 +78,7 @@ async function checkAuthAndInit() {
   try {
     // Check user session
     const { data, error } = await supabaseClient.auth.getSession();
-    
+
     if (error) throw error;
 
     if (data?.session) {
@@ -159,7 +159,7 @@ function initLocalDemoData() {
 
   adminState.description = localDesc;
   adminState.goals = localGoals;
-  
+
   if (localNews) {
     adminState.news = JSON.parse(localNews);
   } else {
@@ -234,7 +234,7 @@ saveInfoBtn.addEventListener('click', async () => {
 
 function renderNewsListManager() {
   newsListManager.innerHTML = '';
-  
+
   if (adminState.news.length === 0) {
     newsListManager.innerHTML = `<p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; padding: 1.5rem;">Belum ada berita mading.</p>`;
     return;
@@ -277,7 +277,7 @@ function resetNewsForm() {
   newsTitleInput.value = '';
   newsCategoryInput.value = 'Pengumuman';
   newsContentInput.value = '';
-  
+
   // Set default news date input to today
   const today = new Date();
   const offset = today.getTimezoneOffset();
@@ -288,7 +288,7 @@ function resetNewsForm() {
   formIcon.setAttribute('data-lucide', 'plus-circle');
   saveNewsBtn.innerHTML = `<i data-lucide="plus"></i> Tambah Berita`;
   cancelEditBtn.style.display = 'none';
-  
+
   if (typeof lucide !== 'undefined') {
     lucide.createIcons();
   }
@@ -328,7 +328,7 @@ saveNewsBtn.addEventListener('click', async (e) => {
       const newId = 'demo-' + Date.now();
       adminState.news.push({ id: newId, ...payload });
     }
-    
+
     localStorage.setItem('demo_news', JSON.stringify(adminState.news));
     resetNewsForm();
     renderNewsListManager();
@@ -361,7 +361,7 @@ saveNewsBtn.addEventListener('click', async (e) => {
 });
 
 // Edit card trigger (attached to window scope)
-window.editNewsCard = function(id) {
+window.editNewsCard = function (id) {
   const item = adminState.news.find(n => n.id === id);
   if (!item) return;
 
@@ -375,7 +375,7 @@ window.editNewsCard = function(id) {
   formIcon.setAttribute('data-lucide', 'edit-3');
   saveNewsBtn.innerHTML = `<i data-lucide="save"></i> Perbarui Berita`;
   cancelEditBtn.style.display = 'inline-flex';
-  
+
   // Scroll to form smoothly
   newsFormTitle.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   if (typeof lucide !== 'undefined') {
@@ -384,13 +384,13 @@ window.editNewsCard = function(id) {
 };
 
 // Delete card trigger
-window.deleteNewsCard = async function(id) {
+window.deleteNewsCard = async function (id) {
   if (!confirm('Apakah Anda yakin ingin menghapus berita ini?')) return;
 
   if (useLocalDemoMode) {
     adminState.news = adminState.news.filter(n => n.id !== id);
     localStorage.setItem('demo_news', JSON.stringify(adminState.news));
-    
+
     if (newsIdInput.value === id) resetNewsForm();
     renderNewsListManager();
     return;
@@ -428,7 +428,7 @@ saveLocalConfigBtn.addEventListener('click', () => {
     localStorage.setItem('jfn_supabase_anon_key', keyVal);
     alert('Kredensial disimpan secara lokal. Muat ulang halaman (refresh) untuk menghubungkan kembali!');
   }
-  
+
   window.location.reload();
 });
 
@@ -464,7 +464,7 @@ function showSuccessFeedback(btnElement, text) {
   if (typeof lucide !== 'undefined') {
     lucide.createIcons();
   }
-  
+
   setTimeout(() => {
     btnElement.innerHTML = originalHtml;
     btnElement.disabled = false;
