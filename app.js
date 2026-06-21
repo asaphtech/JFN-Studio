@@ -121,12 +121,14 @@ async function loadDataFromSupabase() {
 
 function setDatabaseStatus(connected, text) {
   isDbConnected = connected;
-  dbStatusText.textContent = text;
+  if (dbStatusText) dbStatusText.textContent = text;
 
-  if (connected) {
-    footerInfo.classList.add('online');
-  } else {
-    footerInfo.classList.remove('online');
+  if (footerInfo) {
+    if (connected) {
+      footerInfo.classList.add('online');
+    } else {
+      footerInfo.classList.remove('online');
+    }
   }
 }
 

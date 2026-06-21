@@ -35,15 +35,38 @@ INSERT INTO public.jfn_news (title, category, date, content) VALUES
 ('Optimalisasi Performa & Animasi Panel', 'Update', '2026-06-19', 'Telah dilakukan peningkatan performa render halaman beranda pembaruan. Penambahan efek backdrop-blur (Glassmorphism) dan animasi glow pulse status kini terasa lebih responsif di berbagai perangkat. Kami juga mempermudah alur edit info langsung di sisi klien.')
 ON CONFLICT DO NOTHING;
 
--- 5. KETERANGAN MENGENAI ROW LEVEL SECURITY (RLS):
--- Agar website publik dapat membaca informasi pembaruan dan settings, Anda perlu mengaktifkan kebijakan RLS di Supabase:
---
--- A. Kebijakan untuk jfn_news:
---    - Kebijakan SELECT (BACA): Izinkan untuk semua orang (Enable read access for all users).
---    - Kebijakan INSERT, UPDATE, DELETE (TULIS): Hanya izinkan untuk user yang terautentikasi (Enable write access for authenticated users only).
---
--- B. Kebijakan untuk jfn_settings:
---    - Kebijakan SELECT (BACA): Izinkan untuk semua orang (Enable read access for all users).
---    - Kebijakan INSERT, UPDATE, DELETE (TULIS): Hanya izinkan untuk user yang terautentikasi (Enable write access for authenticated users only).
---
--- Anda juga dapat menonaktifkan RLS untuk tabel ini jika hanya ingin menggunakannya untuk pengujian cepat (TIDAK disarankan untuk produksi).
+-- 5. AKTIFKAN ROW LEVEL SECURITY (RLS) & BUAT KEBIJAKAN AKSES SECARA OTOMATIS:
+-- Mengaktifkan RLS pada tabel jfn_news dan jfn_settings
+ALTER TABLE public.jfn_news ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.jfn_settings ENABLE ROW LEVEL SECURITY;
+
+-- Menghapus kebijakan lama jika ada (mencegah duplikasi)
+DROP POLICY IF EXISTS "Allow public read access on jfn_news" ON public.jfn_news;
+DROP POLICY IF EXISTS "Allow authenticated write access on jfn_news" ON public.jfn_news;
+DROP POLICY IF EXISTS "Allow public read access on jfn_settings" ON public.jfn_settings;
+DROP POLICY IF EXISTS "Allow authenticated write access on jfn_settings" ON public.jfn_settings;
+
+-- Kebijakan Akses untuk jfn_news
+CREATE POLICY "Allow public read access on jfn_news" 
+ON public.jfn_news FOR SELECT 
+TO public 
+USING (true);
+
+CREATE POLICY "Allow authenticated write access on jfn_news" 
+ON public.jfn_news FOR ALL 
+TO authenticated 
+USING (true) 
+WITH CHECK (true);
+
+-- Kebijakan Akses untuk jfn_settings
+CREATE POLICY "Allow public read access on jfn_settings" 
+ON public.jfn_settings FOR SELECT 
+TO public 
+USING (true);
+
+CREATE POLICY "Allow authenticated write access on jfn_settings" 
+ON public.jfn_settings FOR ALL 
+TO authenticated 
+USING (true) 
+WITH CHECK (true);
+
